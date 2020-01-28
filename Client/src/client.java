@@ -18,6 +18,7 @@ public class client implements controller {
     class writer extends Thread {
         @Override
         public void run() {
+
             while(true)
             {
                 try {

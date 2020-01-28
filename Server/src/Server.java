@@ -83,10 +83,10 @@ public class Server implements controller {
                             {
                                 if(subStr.length==2)
                                 {
-                                    Model.showDepartments();
+                                    send(Model.showDepartments());
                                 } else if (subStr.length==3)
                                 {
-                                    Model.showDepartment(subStr[2]);
+                                    send(Model.showDepartment(subStr[2]));
                                 }
                                 else
                                 {
@@ -97,9 +97,9 @@ public class Server implements controller {
                             case("-employee"): {
                                 if (subStr.length == 2) {
 
-                                    Model.showEmployees();
+                                    send(Model.showEmployees());
                                 } else if(subStr.length==3) {
-                                    Model.showEmployee(subStr[2]);
+                                    send(Model.showEmployee(subStr[2]));
                                 }else
                                 {
                                     send("Неверное количество аргументов команды -show.\nВоспользуйтесь справкой -h");
@@ -121,14 +121,14 @@ public class Server implements controller {
                         {
                             if(subStr.length==3)
                             {
-                                Model.deleteDepartment(subStr[2]);
+                                send(Model.deleteDepartment(subStr[2]));
                             }
                             break;
                         }
                         case("-employee"): {
                             if(subStr.length==3)
                             {
-                                Model.deleteEmployee(subStr[2]);
+                                send(Model.deleteEmployee(subStr[2]));
                             }
                             break;
                         }
@@ -161,11 +161,11 @@ public class Server implements controller {
                         {
                             if(subStr.length == 3)
                             {
-                                Model.showDepartment(subStr[2]);
+                                send(Model.showDepartment(subStr[2]));
                             }
                             else if(subStr.length==4)
                             {
-                                Model.searchDepartament(subStr[2],subStr[3]);
+                               send(Model.searchDepartament(subStr[2],subStr[3]));
                             }
                             else
                             {
@@ -177,11 +177,11 @@ public class Server implements controller {
                         {
                             if(subStr.length == 3)
                             {
-                                Model.showEmployee(subStr[2]);
+                                send(Model.showEmployee(subStr[2]));
                             }
                             if(subStr.length==4)
                             {
-                                Model.searchEmployee(subStr[2],subStr[3]);
+                                send(Model.searchEmployee(subStr[2],subStr[3]));
                             } else
                             {
                                 send("Неверное количество аргументов команды -search.\nВоспользуйтесь справкой -h");
@@ -217,6 +217,7 @@ public class Server implements controller {
                             this.send("NAXUI STOP NAJAL?");
                             break;
                         }
+                        send("Вы запросили: "+word);
                         query(word);
                     }
                 } catch (IOException | ClassNotFoundException e) {

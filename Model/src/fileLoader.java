@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class fileLoader implements model {
+    String dataBase = "C:\\Users\\EXTRAVAGANZA\\Desktop\\DB\\";
     public String createDepartment(String name,String id_dir) throws IOException, ClassNotFoundException {
         String emptyId = emptyId("1");
         Department temp = new Department();
@@ -18,7 +19,7 @@ public class fileLoader implements model {
         try {
             checkExistsDepartment(temp);
             changeEmployee(temp.getDirector(),"отдел",emptyId);
-            FileOutputStream outputStream = new FileOutputStream("C:\\1_"+emptyId);
+            FileOutputStream outputStream = new FileOutputStream(dataBase+"1_"+emptyId);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(temp);
             objectOutputStream.close();
@@ -35,9 +36,9 @@ public class fileLoader implements model {
         return reportDeparment(temp);
     }
     private Employee findEmployee(String id) throws IOException, ClassNotFoundException {
-        if(new File("C:\\0_"+id).exists())
+        if(new File(dataBase+"0_"+id).exists())
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+"0_"+id);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+"0_"+id);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Employee read = (Employee) objectInputStream.readObject();
             fileInputStream.close();
@@ -48,7 +49,7 @@ public class fileLoader implements model {
             return null;
     }
     private void checkExistsDepartment(Department temp) throws IOException, duplicateDirector, ClassNotFoundException, duplicateObject {
-        File file = new File("C:\\");
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -60,7 +61,7 @@ public class fileLoader implements model {
                 res.add(stro4ki.get(i));
         }
         for(int i=0;i<res.size();i++) {
-            FileInputStream fileInputStream = new FileInputStream("C:\\" + res.get(i)[0] + "_" + res.get(i)[1]);
+            FileInputStream fileInputStream = new FileInputStream(dataBase + res.get(i)[0] + "_" + res.get(i)[1]);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Department read = (Department) objectInputStream.readObject();
             if (read.getName().equals(temp.getName())) {
@@ -71,7 +72,7 @@ public class fileLoader implements model {
         }
     }
     private  String emptyId(String k) {
-        File file = new File("C:\\");
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -110,7 +111,7 @@ public class fileLoader implements model {
         temp.setSalary(Integer.parseInt(salary));
         try {
             checkExistsEmployee(temp);
-            FileOutputStream outputStream = new FileOutputStream("C:\\0_"+emptyId("0"));
+            FileOutputStream outputStream = new FileOutputStream(dataBase+"0_"+emptyId("0"));
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(temp);
             objectOutputStream.close();
@@ -122,7 +123,7 @@ public class fileLoader implements model {
         catch(ClassNotFoundException ignored){}
     }
     private  void checkExistsEmployee(Employee temp) throws duplicateObject, IOException, ClassNotFoundException {
-        File file = new File("C:\\");
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -135,7 +136,7 @@ public class fileLoader implements model {
         }
         for(int i=0;i<res.size();i++)
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+res.get(i)[0]+"_"+res.get(i)[1]);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+res.get(i)[0]+"_"+res.get(i)[1]);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Employee read = (Employee) objectInputStream.readObject();
             if(read.equals(temp)) throw new duplicateObject();
@@ -158,10 +159,9 @@ public class fileLoader implements model {
         return kek;
     }
     public  String showEmployee(String id) throws IOException, ClassNotFoundException {
-        String resultat=null;
-        if(new File("C:\\0_"+id).exists())
+        if(new File(dataBase+"0_"+id).exists())
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+"0_"+id);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+"0_"+id);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Employee read = (Employee) objectInputStream.readObject();
             fileInputStream.close();
@@ -172,8 +172,8 @@ public class fileLoader implements model {
            return "Сотрудник с указанным ID не существует";
     }
     public  String showEmployees() throws IOException, ClassNotFoundException {
-        String resultat = null;
-        File file = new File("C:\\");
+        String resultat = "";
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -187,7 +187,7 @@ public class fileLoader implements model {
         boolean flag = false;
         for(int i=0;i<res.size();i++)
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+res.get(i)[0]+"_"+res.get(i)[1]);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+res.get(i)[0]+"_"+res.get(i)[1]);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Employee read = (Employee) objectInputStream.readObject();
             resultat+="ID сотрудника:"+ res.get(i)[1] +"\n"+reportEmployee(read);
@@ -199,9 +199,9 @@ public class fileLoader implements model {
         return resultat;
     }
     public String showDepartment(String id) throws IOException, ClassNotFoundException {
-        if(new File("C:\\1_"+id).exists())
+        if(new File(dataBase+"1_"+id).exists())
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+"1_"+id);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+"1_"+id);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Department read = (Department) objectInputStream.readObject();
             fileInputStream.close();
@@ -212,8 +212,8 @@ public class fileLoader implements model {
            return "Отдел с указанным ID не существует";
     }
     public String showDepartments() throws IOException, ClassNotFoundException {
-        String resultat=null;
-        File file = new File("C:\\");
+        String resultat="";
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -227,7 +227,7 @@ public class fileLoader implements model {
         boolean flag = false;
         for(int i=0;i<res.size();i++)
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+res.get(i)[0]+"_"+res.get(i)[1]);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+res.get(i)[0]+"_"+res.get(i)[1]);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Department read = (Department) objectInputStream.readObject();
             resultat += "ID отдела:"+ res.get(i)[1] + "\n" +reportDeparment(read);
@@ -244,13 +244,10 @@ public class fileLoader implements model {
                         "ID начальника:" + temp.getDirector();
         return kek;
     }
-    private  String report(String result) {
-        return result;
-    }
     public  String searchDepartament(String attr,String value) throws IOException, ClassNotFoundException {
         boolean flag = false;
-        String resultat = null;
-        File file = new File("C:\\");
+        String resultat = "";
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -263,7 +260,7 @@ public class fileLoader implements model {
         }
         for(int i=0;i<res.size();i++)
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+res.get(i)[0]+"_"+res.get(i)[1]);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+res.get(i)[0]+"_"+res.get(i)[1]);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Department read = (Department) objectInputStream.readObject();
             switch (attr)
@@ -300,12 +297,12 @@ public class fileLoader implements model {
     }
     public  String deleteDepartment(String id) throws IOException, ClassNotFoundException {
 
-        FileInputStream fileInputStream = new FileInputStream("C:\\"+"1_"+id);
+        FileInputStream fileInputStream = new FileInputStream(dataBase+"1_"+id);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Department read = (Department) objectInputStream.readObject();
         fileInputStream.close();
         objectInputStream.close();
-        File file = new File("C:\\1_"+id);
+        File file = new File(dataBase+"1_"+id);
         if(file.delete()) {
             return "ID отдела:" + id + reportDeparment(read) + "Успешно удалён";
         }
@@ -314,12 +311,12 @@ public class fileLoader implements model {
         }
     }
     public  String deleteEmployee(String id) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\"+"0_"+id);
+        FileInputStream fileInputStream = new FileInputStream(dataBase+"0_"+id);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Employee read = (Employee) objectInputStream.readObject();
         fileInputStream.close();
         objectInputStream.close();
-        File file = new File("C:\\0_"+id);
+        File file = new File(dataBase+"0_"+id);
         if(file.delete()) {
             return "ID сотрудника:" + id +"" + "\n" + reportEmployee(read) + "\nУспешно удалён";
         }
@@ -328,9 +325,9 @@ public class fileLoader implements model {
         }
     }
     public  String searchEmployee(String attr,String value) throws IOException, ClassNotFoundException {
-        String resultat = null;
+        String resultat = "";
         boolean flag = false;
-        File file = new File("C:\\");
+        File file = new File(dataBase);
         String[] test = file.list();
         ArrayList<String[]> stro4ki = new ArrayList<String[]>();
         for (int i = 0; i < test.length; i++)
@@ -343,7 +340,7 @@ public class fileLoader implements model {
         }
         for(int i=0;i<res.size();i++)
         {
-            FileInputStream fileInputStream = new FileInputStream("C:\\"+res.get(i)[0]+"_"+res.get(i)[1]);
+            FileInputStream fileInputStream = new FileInputStream(dataBase+res.get(i)[0]+"_"+res.get(i)[1]);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             Employee read = (Employee) objectInputStream.readObject();
             switch (attr)
@@ -415,7 +412,7 @@ public class fileLoader implements model {
         return resultat;
     }
     public  void changeDepartment(String id, String attr,String value) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\"+"1_"+id);
+        FileInputStream fileInputStream = new FileInputStream(dataBase+"1_"+id);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Department read = (Department) objectInputStream.readObject();
         fileInputStream.close();
@@ -430,13 +427,13 @@ public class fileLoader implements model {
                 break;
             }
         }
-        FileOutputStream outputStream = new FileOutputStream("C:\\1_"+id);
+        FileOutputStream outputStream = new FileOutputStream(dataBase+"1_"+id);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(read);
         objectOutputStream.close();
     }
     public  void changeEmployee(String id,String attr,String value) throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\"+"0_"+id);
+        FileInputStream fileInputStream = new FileInputStream(dataBase+"0_"+id);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Employee read = (Employee) objectInputStream.readObject();
         fileInputStream.close();
@@ -471,7 +468,7 @@ public class fileLoader implements model {
                 break;
             }
         }
-        FileOutputStream outputStream = new FileOutputStream("C:\\0_"+id);
+        FileOutputStream outputStream = new FileOutputStream(dataBase+"0_"+id);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(read);
         objectOutputStream.close();
