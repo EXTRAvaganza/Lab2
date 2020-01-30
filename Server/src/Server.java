@@ -156,6 +156,7 @@ public class Server implements controller {
                 }
                 case("-search"):
                 {
+                    if(subStr.length>1)
                     switch (subStr[1]){
                         case("-department"):
                         {
@@ -188,6 +189,10 @@ public class Server implements controller {
                             }
                             break;
                         }
+                    }
+                    else
+                    {
+                        send("Неверное количество аргументов команды -search.\nВоспользуйтесь справкой -h");
                     }
                     break;
                 }
